@@ -58,8 +58,7 @@ module AssetSync
       if self.config.manifest
         if ActionView::Base.respond_to?(:assets_manifest)
           log "Using: Rails 4.0 manifest access"
-          manifest = Sprockets::Manifest.new(ActionView::Base.assets_manifest.environment, ActionView::Base.assets_manifest.dir)
-          return manifest.assets.values.map { |f| File.join(self.config.assets_prefix, f) }
+          return ActionView::Base.assets_manifest.assets.values.map { |f| File.join(self.config.assets_prefix, f) }
         elsif File.exist?(self.config.manifest_path)
           log "Using: Manifest #{self.config.manifest_path}"
           yml = YAML.load(IO.read(self.config.manifest_path))
